@@ -287,13 +287,16 @@ Here, I ran into a couple of errors. I got around this by deactivating the virtu
 - If the virtual environment is not active, move to `/var/www/catalog/catalog` and run `source venv/bin/activate`.
 - Now run `python database_setup.py`, and then `python dummy_data.py` to install some dummy data.
 - To verify this worked, run `sudo su - postgres`, then `psql` and connect to catalog `\c catalog`, and run `select * from item;` which will output:
-`       name        | id |           description           | category_id | user_id
+
+```
+       name        | id |           description           | category_id | user_id
 -------------------+----+---------------------------------+-------------+---------
  Luke Skywalker    |  1 | Dummy Data For Luke Skywalker   |           1 |       1
  Kylo Ren          |  2 | Dummy Data for Kylo Ren         |           1 |       1
  Luke's Lightsaber |  3 | Dummy Data for Lukes Lightsaber |           2 |       1
  Sand Speeder      |  4 | Dummy Data for Sand Speeder     |           3 |       1
-(4 rows)`
+(4 rows)
+```
 - Quit connect to catalog `\q`
 - Logout from postgres using `exit`.
 
