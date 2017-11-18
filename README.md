@@ -260,17 +260,19 @@ To activate the new configuration, you need to run:
 ### Create a new database user named catalog that has limited permissions to your catalog application database.
 - Change to the postgres user `sudo su - postgre` and connect `psql`
 - Create the user user name catalog `CREATE USER catalog WITH PASSWORD 'catalog-pw';` and check its permissions by running `\du` which should output somthing like this:
-` List of roles
+```
+List of roles
  Role name |  Attributes | Member of
 -----------+-------------+-----------
  catalog   |             |  {}
-`
+```
 - We will update the users permissions to allow the user to create a database: `ALTER USER catalog CREATEDB;`, now running `\du` should output something like this:
-` List of roles
+
+```List of roles
  Role name |  Attributes | Member of
 -----------+-------------+-----------
  catalog   | Create DB   | {}
-`
+```
 - now create a database named catalog `CREATE DATABASE catalog WITH OWNER catalog;`
 - connect `\c catalog`
 - revoke all rights and grant access to catalog
