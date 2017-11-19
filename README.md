@@ -51,7 +51,7 @@ Ubuntu comes with a firewall preinstalled called ufw but it is deactive by defau
  Currently grader does not have persmission to do the sudo command. Running `sudo cat /etc/passwd` (as grader) and inputing your password will output the following: `grader is not in the sudoers file.  This incident will be reported.`
 
 5 . Give grader the permission to sudo.
- 
+
 Open a seperate terminal window and log in as ubuntu.
 Create a file `sudo nano /etc/sudoers.d/grader` and paste in the following: `grader ALL=(ALL:ALL) ALL` and save and quit.
 Go back to the terminal that has grader logged in, running
@@ -104,7 +104,7 @@ Configure the local timezone to UTC.
   `def application(environ, start_response):
     status = '200 OK'
     output = 'Hello Batman!'
-    response_headers = [('Content-type', 'text/plain'), 
+    response_headers = [('Content-type', 'text/plain'),
     ('Content-Length', str(len(output)))]
     start_response(status, response_headers)
    return [output]`
@@ -280,8 +280,8 @@ List of roles
 - Quit connect to catalog `\q`
 - Logout from postgres using `exit`.
 
-### Now its time to run the python database scripts. 
-Here, I ran into a couple of errors. I got around this by deactivating the virtual environment and leaving the catalog directory by running `cd` and give write permissions `sudo chown -R ubuntu:ubuntu catalog/`. 
+### Now its time to run the python database scripts.
+Here, I ran into a couple of errors. I got around this by deactivating the virtual environment and leaving the catalog directory by running `cd` and give write permissions `sudo chown -R ubuntu:ubuntu catalog/`.
 
 - Then I went through the installed packages section again to make sure everything was set up correctly.
 - If the virtual environment is not active, move to `/var/www/catalog/catalog` and run `source venv/bin/activate`.
@@ -320,7 +320,25 @@ Here, I ran into a couple of errors. I got around this by deactivating the virtu
 
 ## Now Everything should work.
 
+## unattended-upgrades
+Ensure all system packages have been updated to most recent versions.
+- Running `sudo apt install unattended-upgrades` will output `unattended-upgrades is already the newest version (0.90ubuntu0.8).
+0 upgraded, 0 newly installed, 0 to remove and 11 not upgraded.`
+- run `sudo nano /etc/apt/apt.conf.d/10periodic` and update it to match
+```
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+
+```
+- run `sudo nano /etc/apt/apt.conf.d/50unattended-upgrades` and uncomment `"${distro_id}:${distro_codename}-updates";`
+- now upgrade `sudo apt-get upgrade`
+- running `sudo apt install unattended-upgrades` will now output
+```
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+```
+
 ### Resources
-- https://github.com/anumsh/Linux-Server-Configuration 
-- https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps 
-- https://stackoverflow.com/a/17916515) 
+- https://github.com/anumsh/Linux-Server-Configuration
+- https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
+- https://stackoverflow.com/a/17916515)
